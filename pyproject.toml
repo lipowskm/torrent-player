@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "torrent-player"
+version = "0.1.0"
+description = ""
+authors = ["lipowskm <m.lipowski95@gmail.com>"]
+readme = "README.md"
+packages = [{include = "torrent_player"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+napi-py = "^1.1.4"
+requests = "^2.28.2"
+lxml = "^4.9.2"
+torrentool = "^1.1.1"
+rich = "^13.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
