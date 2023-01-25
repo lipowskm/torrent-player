@@ -1,6 +1,6 @@
-import shutil
 from dataclasses import dataclass, field
 from pathlib import Path
+import shutil
 
 from torrentool.api import Torrent as _Torrent
 

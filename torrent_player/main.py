@@ -1,7 +1,7 @@
 import argparse
+from dataclasses import dataclass
 import logging
 import sys
-from dataclasses import dataclass
 
 from rich.console import Console
 from rich.logging import RichHandler

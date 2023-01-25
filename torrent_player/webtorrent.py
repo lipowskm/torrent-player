@@ -1,8 +1,8 @@
+from pathlib import Path
 import re
 import subprocess
 import tempfile
-from pathlib import Path
-from typing import Literal, get_args
+from typing import Literal, Optional, get_args
 
 
 class WebtorrentError(Exception):
@@ -28,8 +28,8 @@ class Webtorrent:
         self.entrypoint = entrypoint
 
     def _run_download(
-        self, command: str, magnet: str, output_dir: str, timeout: int
-    ) -> subprocess.CompletedProcess:
+        self, command: str, magnet: str, output_dir: Optional[str], timeout: int
+    ) -> subprocess.CompletedProcess[bytes]:
         if not output_dir:
             output_dir = tempfile.mkdtemp()
         else:
@@ -54,7 +54,7 @@ class Webtorrent:
         return result
 
     def download_meta(
-        self, magnet: str, output_dir: str = None, timeout: int = 60
+        self, magnet: str, output_dir: Optional[str] = None, timeout: int = 60
     ) -> str:
         result = self._run_download("downloadmeta", magnet, output_dir, timeout)
         stdout = result.stdout.decode("utf-8")
@@ -65,11 +65,13 @@ class Webtorrent:
             )
         return str(Path(match.group()).absolute())
 
-    def download(self, magnet: str, output_dir: str = None, timeout: int = 3600) -> None:
+    def download(
+        self, magnet: str, output_dir: Optional[str] = None, timeout: int = 3600
+    ) -> None:
         self._run_download("download", magnet, output_dir, timeout)
 
     def stream(
-        self, magnet: str, output: _STREAM_OUTPUTS, file_index: int = None
+        self, magnet: str, output: _STREAM_OUTPUTS, file_index: Optional[int] = None
     ) -> None:
         if output not in get_args(self._STREAM_OUTPUTS):
             raise ValueError(
@@ -77,7 +79,7 @@ class Webtorrent:
             )
         args = [self.entrypoint, f"--{output}"]
         if file_index:
-            args.extend([f"--select", str(file_index)])
+            args.extend(["--select", str(file_index)])
         args.append(f'"{magnet}"')
         result = subprocess.run(
             " ".join(args),

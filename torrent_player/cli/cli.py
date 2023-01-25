@@ -3,7 +3,7 @@ from rich.table import Table
 
 from torrent_player.cli.colors import error
 from torrent_player.torrent import Torrent
-from torrent_player.utils import is_video_file, convert_size
+from torrent_player.utils import convert_size, is_video_file
 
 
 def choose_torrent(console: Console, torrents: list[Torrent]) -> Torrent:

@@ -1,8 +1,8 @@
 import random
 from urllib.parse import urlparse, urlunparse
 
-import requests
 from lxml import html
+import requests
 
 from torrent_player.constants import USER_AGENTS
 from torrent_player.torrent import Torrent
