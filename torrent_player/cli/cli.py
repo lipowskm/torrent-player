@@ -7,6 +7,13 @@ from torrent_player.utils import convert_size, is_video_file
 
 
 def choose_torrent(console: Console, torrents: list[Torrent]) -> Torrent:
+    """
+    Choose torrent from list basing on console input.
+
+    :param console: Rich Console object
+    :param torrents: list of Torrent objects to select from
+    :return: selected torrent
+    """
     table = get_torrents_table(torrents)
     console.print(table)
     option = None
@@ -20,6 +27,7 @@ def choose_torrent(console: Console, torrents: list[Torrent]) -> Torrent:
                 console.print(error("Invalid value, try again"))
                 option = None
                 continue
+        # TODO: implement pagination
         if option.lower() in ["n", "p"]:
             raise NotImplementedError
         console.print(error("Invalid value, try again"))
@@ -27,6 +35,14 @@ def choose_torrent(console: Console, torrents: list[Torrent]) -> Torrent:
 
 
 def choose_file_from_torrent(console: Console, torrent: Torrent) -> int:
+    """
+    Choose video file from torrent containing multiple video files
+    basing on user input.
+
+    :param console: Rich Console object
+    :param torrent: Torrent object to select video file from
+    :return: index of selected file
+    """
     table = get_torrent_files_table(torrent)
     console.print(table)
     option = None
@@ -52,9 +68,15 @@ def choose_file_from_torrent(console: Console, torrent: Torrent) -> int:
 
 
 def get_torrents_table(torrents: list[Torrent]) -> Table:
+    """
+    Get printable table with torrents.
+
+    :param torrents: list of Torrent objects
+    :return: Rich Table containing torrents
+    """
     table = Table(title="Torrents found:", title_style="bold")
     table.add_column("Number", justify="right")
-    table.add_column("Title", justify="left")
+    table.add_column("Title", justify="left", overflow="fold")
     table.add_column("Upload date", justify="center")
     table.add_column("Size", justify="right")
     table.add_column("Seeders", justify="right")
@@ -74,6 +96,12 @@ def get_torrents_table(torrents: list[Torrent]) -> Table:
 
 
 def get_torrent_files_table(torrent: Torrent) -> Table:
+    """
+    Get printable table with files from torrent.
+
+    :param torrent: Torrent object
+    :return: Rich Table containing files inside torrent
+    """
     table = Table(title=torrent.title, title_style="bold")
     table.add_column("Number", justify="right")
     table.add_column("File name", justify="left")

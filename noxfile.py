@@ -13,7 +13,7 @@ def test(s: Session) -> None:
         "python",
         "-m",
         "pytest",
-        "--cov=fact",
+        "--cov=torrent_player",
         "--cov-report=html",
         "--cov-report=term",
         "tests",

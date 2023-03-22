@@ -26,6 +26,7 @@ class Torrent:
 
     @property
     def files(self) -> list[File]:
+        """List of files inside torrent."""
         try:
             self._files
         except AttributeError:
@@ -33,7 +34,9 @@ class Torrent:
             torrent_path = webtorrent.download_meta(self.magnet)
             try:
                 torrent = _Torrent.from_file(torrent_path)
-                files = [File(file.name, file.length) for file in torrent.files]
+                files = [
+                    File(Path(file.name).name, file.length) for file in torrent.files
+                ]
                 object.__setattr__(self, "_files", files)
             finally:
                 parent_dir = Path(torrent_path).parent

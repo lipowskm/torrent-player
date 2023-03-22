@@ -12,8 +12,6 @@ def get_headers() -> dict[str, str]:
     """
     The Pirate Bay blocks requests (403 Forbidden)
     basing on User-Agent header, so it's probably better to rotate them.
-    User-Agents taken from:
-    https://techblog.willshouse.com/2012/01/03/most-common-user-agents/
     """
     return {
         "User-Agent": random.choice(USER_AGENTS),
